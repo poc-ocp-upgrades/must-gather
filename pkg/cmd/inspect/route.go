@@ -3,7 +3,6 @@ package inspect
 import (
 	"os"
 	"path"
-
 	routev1 "github.com/openshift/api/route/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -11,8 +10,9 @@ import (
 )
 
 func inspectRouteInfo(info *resource.Info, o *InspectOptions) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	obj := info.Object
-
 	if unstructureObj, ok := obj.(*unstructured.Unstructured); ok {
 		structuredRoute := &routev1.Route{}
 		err := runtime.DefaultUnstructuredConverter.FromUnstructured(unstructureObj.Object, structuredRoute)
@@ -35,34 +35,27 @@ func inspectRouteInfo(info *resource.Info, o *InspectOptions) error {
 			}
 			structuredRouteList.Items = append(structuredRouteList.Items, *structuredRoute)
 		}
-
 		obj = structuredRouteList
 	}
-
 	switch castObj := obj.(type) {
 	case *routev1.Route:
 		elideRoute(castObj)
-
 	case *routev1.RouteList:
 		for i := range castObj.Items {
 			elideRoute(&castObj.Items[i])
 		}
-
 	case *unstructured.UnstructuredList:
-
 	}
-
-	// save the current object to disk
 	dirPath := dirPathForInfo(o.baseDir, info)
 	filename := filenameForInfo(info)
-	// ensure destination path exists
 	if err := os.MkdirAll(dirPath, os.ModePerm); err != nil {
 		return err
 	}
 	return o.fileWriter.WriteFromResource(path.Join(dirPath, filename), obj)
 }
-
 func elideRoute(route *routev1.Route) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if route.Spec.TLS == nil {
 		return
 	}
