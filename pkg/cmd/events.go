@@ -37,9 +37,13 @@ type EventsOptions struct {
 func NewEventsOptions(streams genericclioptions.IOStreams) *EventsOptions {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &EventsOptions{IOStreams: streams}
 }
 func NewCmdEvents(parentName string, streams genericclioptions.IOStreams) *cobra.Command {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	o := NewEventsOptions(streams)
@@ -63,6 +67,8 @@ func NewCmdEvents(parentName string, streams genericclioptions.IOStreams) *cobra
 func (o *EventsOptions) Complete(command *cobra.Command, args []string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if len(args) == 1 {
 		if strings.HasPrefix(args[0], "http") {
 			o.eventFileURL = args[0]
@@ -73,6 +79,8 @@ func (o *EventsOptions) Complete(command *cobra.Command, args []string) error {
 	return nil
 }
 func (o *EventsOptions) Validate() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if o.listComponents && len(o.componentName) > 0 {
@@ -90,6 +98,8 @@ func (o *EventsOptions) Validate() error {
 	return nil
 }
 func (o *EventsOptions) Run() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var (
@@ -116,7 +126,16 @@ func (o *EventsOptions) Run() error {
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

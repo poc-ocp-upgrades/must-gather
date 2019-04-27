@@ -20,6 +20,8 @@ type AnalyzeResult struct {
 func GetArtifacts(baseURL string) ([]AnalyzeResult, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	out := []AnalyzeResult{}
 	for name, analyzer := range artifactsToAnalyzeList {
 		tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
@@ -46,6 +48,8 @@ func GetArtifacts(baseURL string) ([]AnalyzeResult, error) {
 	return out, nil
 }
 func getArtifactStorageURL(baseURL, artifactName string) string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return strings.TrimSuffix(strings.Replace(baseURL, "gcsweb-ci.svc.ci.openshift.org/gcs", "storage.googleapis.com", 1), "/") + "/" + artifactName

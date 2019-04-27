@@ -8,6 +8,8 @@ import (
 func PodRunningReady(p *v1.Pod) (bool, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if !hasReadyCondition(p) {
 		return false, nil
 	}
@@ -20,6 +22,8 @@ func PodRunningReady(p *v1.Pod) (bool, error) {
 	return true, nil
 }
 func hasReadyCondition(pod *v1.Pod) bool {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	conditionReady := true
@@ -35,9 +39,13 @@ func hasReadyCondition(pod *v1.Pod) bool {
 func IsPodReady(pod *v1.Pod) bool {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return IsPodReadyConditionTrue(pod.Status)
 }
 func IsPodReadyConditionTrue(status v1.PodStatus) bool {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	condition := GetPodReadyCondition(status)
@@ -46,10 +54,14 @@ func IsPodReadyConditionTrue(status v1.PodStatus) bool {
 func GetPodReadyCondition(status v1.PodStatus) *v1.PodCondition {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_, condition := GetPodCondition(&status, v1.PodReady)
 	return condition
 }
 func GetPodCondition(status *v1.PodStatus, conditionType v1.PodConditionType) (int, *v1.PodCondition) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if status == nil {
@@ -58,6 +70,8 @@ func GetPodCondition(status *v1.PodStatus, conditionType v1.PodConditionType) (i
 	return GetPodConditionFromList(status.Conditions, conditionType)
 }
 func GetPodConditionFromList(conditions []v1.PodCondition, conditionType v1.PodConditionType) (int, *v1.PodCondition) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if conditions == nil {

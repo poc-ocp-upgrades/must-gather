@@ -13,6 +13,8 @@ import (
 func TestDirectoryViable(t *testing.T) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	tc := []struct {
 		name		string
 		dirName		func() (string, error)
@@ -67,9 +69,13 @@ type fakeSupportedResourceFinder struct {
 func (f *fakeSupportedResourceFinder) ServerPreferredResources() ([]*metav1.APIResourceList, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return f.supportedResources, f.withError
 }
 func TestAPIGroupVersionRetrieval(t *testing.T) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	tc := []struct {
@@ -94,6 +100,8 @@ func TestAPIGroupVersionRetrieval(t *testing.T) {
 func resourceListsEqual(a, b []schema.GroupVersionResource) bool {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if len(a) == 0 && len(b) == 0 {
 		return true
 	}
@@ -115,9 +123,13 @@ func resourceListsEqual(a, b []schema.GroupVersionResource) bool {
 func fakeAPIResourceList() []*metav1.APIResourceList {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return []*metav1.APIResourceList{{TypeMeta: metav1.TypeMeta{Kind: "test", APIVersion: "v1"}, GroupVersion: schema.GroupVersion{Group: "test.group.io", Version: "v1"}.String(), APIResources: []metav1.APIResource{{Name: "testresources", SingularName: "testresource", Group: "test.group.io", Version: "v1", Kind: "test", Verbs: []string{"list"}}}}, {TypeMeta: metav1.TypeMeta{Kind: "foo", APIVersion: "v1"}, GroupVersion: schema.GroupVersion{Group: "foo.group.io", Version: "v1"}.String(), APIResources: []metav1.APIResource{{Name: "foos", SingularName: "foo", Group: "foo.group.io", Version: "v1", Kind: "foo", Verbs: []string{"list"}}}}}
 }
 func defaultTempDirTeardown(dirName string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if len(dirName) == 0 {
@@ -126,6 +138,8 @@ func defaultTempDirTeardown(dirName string) error {
 	return os.RemoveAll(dirName)
 }
 func errorFuzzyEquals(a, b error) bool {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if a == nil && b == nil {

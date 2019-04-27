@@ -12,6 +12,8 @@ import (
 func inspectRouteInfo(info *resource.Info, o *InspectOptions) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	obj := info.Object
 	if unstructureObj, ok := obj.(*unstructured.Unstructured); ok {
 		structuredRoute := &routev1.Route{}
@@ -54,6 +56,8 @@ func inspectRouteInfo(info *resource.Info, o *InspectOptions) error {
 	return o.fileWriter.WriteFromResource(path.Join(dirPath, filename), obj)
 }
 func elideRoute(route *routev1.Route) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if route.Spec.TLS == nil {

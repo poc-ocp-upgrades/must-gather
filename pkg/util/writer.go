@@ -14,6 +14,8 @@ type TextWriterSource struct{ Text string }
 func (t *TextWriterSource) Stream() (io.ReadCloser, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &resourceWriterReadCloser{buffer: bytes.NewBuffer([]byte(t.Text))}, nil
 }
 
@@ -23,6 +25,8 @@ type resourceWriterSource struct {
 }
 
 func (r *resourceWriterSource) Stream() (io.ReadCloser, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	buf := bytes.NewBuffer(nil)
@@ -37,9 +41,13 @@ type resourceWriterReadCloser struct{ buffer *bytes.Buffer }
 func (r *resourceWriterReadCloser) Read(p []byte) (n int, err error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return r.buffer.Read(p)
 }
 func (r *resourceWriterReadCloser) Close() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return nil
@@ -48,6 +56,8 @@ func (r *resourceWriterReadCloser) Close() error {
 type simpleFileWriter struct{}
 
 func (f *simpleFileWriter) Write(filepath string, src fileWriterSource) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	dest, err := os.OpenFile(filepath, os.O_RDWR|os.O_CREATE, 0755)
@@ -69,10 +79,14 @@ type MultiSourceFileWriter struct{ printer printers.ResourcePrinter }
 func (f *MultiSourceFileWriter) WriteFromSource(filepath string, source fileWriterSource) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	writer := &simpleFileWriter{}
 	return writer.Write(filepath, source)
 }
 func (f *MultiSourceFileWriter) WriteFromResource(filepath string, obj runtime.Object) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	source := &resourceWriterSource{obj: obj, printer: f.printer}
@@ -80,6 +94,8 @@ func (f *MultiSourceFileWriter) WriteFromResource(filepath string, obj runtime.O
 	return writer.Write(filepath, source)
 }
 func NewMultiSourceWriter(printer printers.ResourcePrinter) *MultiSourceFileWriter {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return &MultiSourceFileWriter{printer: printer}

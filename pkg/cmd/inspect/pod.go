@@ -17,6 +17,8 @@ import (
 func (o *InspectOptions) gatherPodData(destDir, namespace string, pod *corev1.Pod) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if pod.Status.Phase != corev1.PodRunning {
 		log.Printf("        Skipping container data collection for pod %q: Pod not running\n", pod.Name)
 		return nil
@@ -55,6 +57,8 @@ func (o *InspectOptions) gatherPodData(destDir, namespace string, pod *corev1.Po
 func (o *InspectOptions) gatherContainerInfo(destDir string, pod *corev1.Pod, container corev1.Container) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if err := o.gatherContainerAllLogs(path.Join(destDir, "/"+container.Name), pod, &container); err != nil {
 		return err
 	}
@@ -71,6 +75,8 @@ func (o *InspectOptions) gatherContainerInfo(destDir string, pod *corev1.Pod, co
 func (o *InspectOptions) gatherContainerAllLogs(destDir string, pod *corev1.Pod, container *corev1.Container) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if err := os.MkdirAll(destDir, os.ModePerm); err != nil {
 		return err
 	}
@@ -84,6 +90,8 @@ func (o *InspectOptions) gatherContainerAllLogs(destDir string, pod *corev1.Pod,
 	return nil
 }
 func (o *InspectOptions) gatherContainerEndpoints(destDir string, pod *corev1.Pod, container *corev1.Container, metricsPort *util.RemoteContainerPort) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if err := os.MkdirAll(destDir, os.ModePerm); err != nil {
@@ -107,6 +115,8 @@ func (o *InspectOptions) gatherContainerEndpoints(destDir string, pod *corev1.Po
 func filterContainerLogsErrors(err error) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if strings.Contains(err.Error(), "previous terminated container") && strings.HasSuffix(err.Error(), "not found") {
 		log.Printf("        Unable to gather previous container logs: %v\n", err)
 		return nil
@@ -114,6 +124,8 @@ func filterContainerLogsErrors(err error) error {
 	return err
 }
 func (o *InspectOptions) gatherContainerVersion(destDir string, pod *corev1.Pod, metricsPort *util.RemoteContainerPort) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if err := os.MkdirAll(destDir, os.ModePerm); err != nil {
@@ -142,6 +154,8 @@ func (o *InspectOptions) gatherContainerVersion(destDir string, pod *corev1.Pod,
 func (o *InspectOptions) gatherContainerMetrics(destDir string, pod *corev1.Pod, metricsPort *util.RemoteContainerPort) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if err := os.MkdirAll(destDir, os.ModePerm); err != nil {
 		return err
 	}
@@ -153,6 +167,8 @@ func (o *InspectOptions) gatherContainerMetrics(destDir string, pod *corev1.Pod,
 	return o.fileWriter.WriteFromSource(path.Join(destDir, filename), &util.TextWriterSource{Text: result})
 }
 func (o *InspectOptions) gatherContainerHealthz(destDir string, pod *corev1.Pod, metricsPort *util.RemoteContainerPort) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if err := os.MkdirAll(destDir, os.ModePerm); err != nil {
@@ -203,6 +219,8 @@ func (o *InspectOptions) gatherContainerHealthz(destDir string, pod *corev1.Pod,
 func getAvailablePodEndpoints(urlGetter *util.PortForwardURLGetter, pod *corev1.Pod, config *rest.Config, port *util.RemoteContainerPort) ([]string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	result, err := urlGetter.Get("/", pod, config, port)
 	if err != nil {
 		return nil, err
@@ -219,6 +237,8 @@ func getAvailablePodEndpoints(urlGetter *util.PortForwardURLGetter, pod *corev1.
 	return paths, nil
 }
 func (o *InspectOptions) gatherContainerLogs(destDir string, pod *corev1.Pod, container *corev1.Container) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if err := os.MkdirAll(destDir, os.ModePerm); err != nil {

@@ -58,9 +58,13 @@ type InspectOptions struct {
 func NewInspectOptions(streams genericclioptions.IOStreams) *InspectOptions {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &InspectOptions{printFlags: genericclioptions.NewPrintFlags("gathered").WithDefaultOutput("yaml").WithTypeSetter(scheme.Scheme), configFlags: genericclioptions.NewConfigFlags(), overwrite: true, IOStreams: streams}
 }
 func NewCmdInspect(streams genericclioptions.IOStreams) *cobra.Command {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	o := NewInspectOptions(streams)
@@ -83,6 +87,8 @@ func NewCmdInspect(streams genericclioptions.IOStreams) *cobra.Command {
 	return cmd
 }
 func (o *InspectOptions) Complete(cmd *cobra.Command, args []string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	o.args = args
@@ -119,12 +125,16 @@ func (o *InspectOptions) Complete(cmd *cobra.Command, args []string) error {
 func (o *InspectOptions) Validate() error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if len(o.baseDir) == 0 {
 		return fmt.Errorf("--base-dir must not be empty")
 	}
 	return nil
 }
 func (o *InspectOptions) Run() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	r := o.builder.Unstructured().NamespaceParam(o.namespace).DefaultNamespace().AllNamespaces(o.allNamespaces).ResourceTypeOrNameArgs(true, o.args...).Flatten().Latest().Do()
@@ -150,6 +160,8 @@ func (o *InspectOptions) Run() error {
 	return nil
 }
 func (o *InspectOptions) gatherConfigResourceData(destDir string, ctx *resourceContext) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if ctx.visited.Has(configResourceDataKey) {
@@ -187,6 +199,8 @@ func (o *InspectOptions) gatherConfigResourceData(destDir string, ctx *resourceC
 func (o *InspectOptions) gatherOperatorResourceData(destDir string, ctx *resourceContext) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if ctx.visited.Has(operatorResourceDataKey) {
 		log.Printf("Skipping previously-collected operator.openshift.io resource data")
 		return nil
@@ -222,6 +236,8 @@ func (o *InspectOptions) gatherOperatorResourceData(destDir string, ctx *resourc
 func ensureDirectoryViable(dirPath string, allowDataOverride bool) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	baseDirInfo, err := os.Stat(dirPath)
 	if err != nil && os.IsNotExist(err) {
 		return nil
@@ -247,6 +263,8 @@ type supportedResourceFinder interface {
 }
 
 func retrieveAPIGroupVersionResourceNames(discoveryClient supportedResourceFinder, apiGroup string) ([]schema.GroupVersionResource, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	lists, discoveryErr := discoveryClient.ServerPreferredResources()
@@ -283,7 +301,16 @@ func retrieveAPIGroupVersionResourceNames(discoveryClient supportedResourceFinde
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

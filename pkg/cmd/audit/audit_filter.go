@@ -15,6 +15,8 @@ type AuditFilters []AuditFilter
 func (f AuditFilters) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	ret := make([]*auditv1.Event, len(events), len(events))
 	copy(ret, events)
 	for _, filter := range f {
@@ -26,6 +28,8 @@ func (f AuditFilters) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
 type FilterByFailures struct{}
 
 func (f *FilterByFailures) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ret := []*auditv1.Event{}
@@ -46,6 +50,8 @@ type FilterByNamespaces struct{ Namespaces sets.String }
 func (f *FilterByNamespaces) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	ret := []*auditv1.Event{}
 	for i := range events {
 		event := events[i]
@@ -63,6 +69,8 @@ func (f *FilterByNamespaces) FilterEvents(events ...*auditv1.Event) []*auditv1.E
 type FilterByNames struct{ Names sets.String }
 
 func (f *FilterByNames) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ret := []*auditv1.Event{}
@@ -93,6 +101,8 @@ type FilterByUIDs struct{ UIDs sets.String }
 func (f *FilterByUIDs) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	ret := []*auditv1.Event{}
 	for i := range events {
 		event := events[i]
@@ -110,6 +120,8 @@ func (f *FilterByUIDs) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
 type FilterByUser struct{ Users sets.String }
 
 func (f *FilterByUser) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ret := []*auditv1.Event{}
@@ -130,6 +142,8 @@ type FilterByVerbs struct{ Verbs sets.String }
 func (f *FilterByVerbs) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	ret := []*auditv1.Event{}
 	for i := range events {
 		event := events[i]
@@ -146,6 +160,8 @@ func (f *FilterByVerbs) FilterEvents(events ...*auditv1.Event) []*auditv1.Event 
 type FilterByResources struct{ Resources map[schema.GroupResource]bool }
 
 func (f *FilterByResources) FilterEvents(events ...*auditv1.Event) []*auditv1.Event {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ret := []*auditv1.Event{}
@@ -191,6 +207,8 @@ func (f *FilterByResources) FilterEvents(events ...*auditv1.Event) []*auditv1.Ev
 	return ret
 }
 func URIToParts(uri string) (string, schema.GroupVersionResource, string) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	ns := ""

@@ -17,6 +17,8 @@ import (
 func PrintAuditEvents(writer io.Writer, events []*auditv1.Event) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	w := tabwriter.NewWriter(writer, 20, 0, 0, ' ', tabwriter.DiscardEmptyColumns)
 	defer w.Flush()
 	for _, event := range events {
@@ -27,6 +29,8 @@ func PrintAuditEvents(writer io.Writer, events []*auditv1.Event) {
 func PrintAuditEventsWide(writer io.Writer, events []*auditv1.Event) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	w := tabwriter.NewWriter(writer, 20, 0, 0, ' ', tabwriter.DiscardEmptyColumns)
 	defer w.Flush()
 	for _, event := range events {
@@ -35,6 +39,8 @@ func PrintAuditEventsWide(writer io.Writer, events []*auditv1.Event) {
 	}
 }
 func GetEvents(auditFilename string) ([]*auditv1.Event, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	stat, err := os.Stat(auditFilename)

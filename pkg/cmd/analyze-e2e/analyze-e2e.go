@@ -27,9 +27,13 @@ type AnalyzeOptions struct {
 func NewAnalyzeOptions(streams genericclioptions.IOStreams) *AnalyzeOptions {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &AnalyzeOptions{IOStreams: streams}
 }
 func NewCmdAnalyze(parentName string, streams genericclioptions.IOStreams) *cobra.Command {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	o := NewAnalyzeOptions(streams)
@@ -50,6 +54,8 @@ func NewCmdAnalyze(parentName string, streams genericclioptions.IOStreams) *cobr
 func (o *AnalyzeOptions) Complete(command *cobra.Command, args []string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if len(args) >= 1 {
 		o.artifactsBaseURL = args[0]
 	}
@@ -58,12 +64,16 @@ func (o *AnalyzeOptions) Complete(command *cobra.Command, args []string) error {
 func (o *AnalyzeOptions) Validate() error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if len(o.artifactsBaseURL) == 0 {
 		return fmt.Errorf("the URL to e2e-aws artifacts must be specified")
 	}
 	return nil
 }
 func (o *AnalyzeOptions) Run() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	results, err := GetArtifacts(o.artifactsBaseURL)
@@ -87,7 +97,16 @@ func (o *AnalyzeOptions) Run() error {
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }

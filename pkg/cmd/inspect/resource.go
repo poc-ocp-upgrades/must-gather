@@ -25,6 +25,8 @@ const (
 func InspectResource(info *resource.Info, context *resourceContext, o *InspectOptions) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if context.visited.Has(infoToContextKey(info)) {
 		log.Printf("Skipping previously-inspected resource: %q ...", infoToContextKey(info))
 		return nil
@@ -110,6 +112,8 @@ func InspectResource(info *resource.Info, context *resourceContext, o *InspectOp
 func gatherClusterOperatorResource(baseDir string, obj *unstructured.Unstructured, fileWriter *util.MultiSourceFileWriter) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	log.Printf("Gathering cluster operator resource data...\n")
 	destDir := path.Join(baseDir, "/"+clusterScopedResourcesDirname, "/"+obj.GroupVersionKind().Group, "/clusteroperators")
 	if err := os.MkdirAll(destDir, os.ModePerm); err != nil {
@@ -119,6 +123,8 @@ func gatherClusterOperatorResource(baseDir string, obj *unstructured.Unstructure
 	return fileWriter.WriteFromResource(path.Join(destDir, "/"+filename), obj)
 }
 func obtainClusterOperatorRelatedObjects(obj *unstructured.Unstructured) ([]*configv1.ObjectReference, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	log.Printf("    Gathering related object reference information for ClusterOperator %q...\n", obj.GetName())

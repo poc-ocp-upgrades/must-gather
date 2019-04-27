@@ -16,9 +16,13 @@ type resourceContext struct{ visited sets.String }
 func NewResourceContext() *resourceContext {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &resourceContext{visited: sets.NewString()}
 }
 func objectReferenceToResourceInfo(clientGetter genericclioptions.RESTClientGetter, ref *configv1.ObjectReference) (*resource.Info, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	resourceString := fmt.Sprintf("%s/%s", ref.Resource, ref.Name)
@@ -35,6 +39,8 @@ func objectReferenceToResourceInfo(clientGetter genericclioptions.RESTClientGett
 func groupResourceToInfos(clientGetter genericclioptions.RESTClientGetter, ref schema.GroupResource, namespace string) ([]*resource.Info, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	resourceString := ref.Resource
 	if len(ref.Group) > 0 {
 		resourceString = fmt.Sprintf("%s.%s", resourceString, ref.Group)
@@ -43,6 +49,8 @@ func groupResourceToInfos(clientGetter genericclioptions.RESTClientGetter, ref s
 	return b.Do().Infos()
 }
 func infoToContextKey(info *resource.Info) string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	name := info.Name
@@ -54,14 +62,20 @@ func infoToContextKey(info *resource.Info) string {
 func objectRefToContextKey(objRef *configv1.ObjectReference) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return fmt.Sprintf("%s/%s/%s/%s", objRef.Namespace, objRef.Group, objRef.Resource, objRef.Name)
 }
 func resourceToContextKey(resource schema.GroupResource, namespace string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return fmt.Sprintf("%s/%s/%s/%s", namespace, resource.Group, resource.Resource, "*")
 }
 func dirPathForInfo(baseDir string, info *resource.Info) string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	groupName := "core"
@@ -82,6 +96,8 @@ func dirPathForInfo(baseDir string, info *resource.Info) string {
 	return objPath
 }
 func filenameForInfo(info *resource.Info) string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if meta.IsListType(info.Object) {

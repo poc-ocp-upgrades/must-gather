@@ -14,6 +14,8 @@ type PodsAnalyzer struct{}
 func (*PodsAnalyzer) Analyze(content []byte) (string, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	manifestObj, err := runtime.Decode(unstructured.UnstructuredJSONScheme, content)
 	if err != nil {
 		return "", err

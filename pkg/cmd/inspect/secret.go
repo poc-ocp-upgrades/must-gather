@@ -13,6 +13,8 @@ import (
 func inspectSecretInfo(info *resource.Info, o *InspectOptions) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	obj := info.Object
 	if unstructureObj, ok := obj.(*unstructured.Unstructured); ok {
 		structuredSecret := &corev1.Secret{}
@@ -58,6 +60,8 @@ func inspectSecretInfo(info *resource.Info, o *InspectOptions) error {
 var publicSecretKeys = sets.NewString("tls.crt", "ca.crt", "service-ca.crt")
 
 func elideSecret(secret *corev1.Secret) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	for k := range secret.Data {

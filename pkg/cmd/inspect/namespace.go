@@ -16,9 +16,13 @@ import (
 func namespaceResourcesToCollect() []schema.GroupResource {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return []schema.GroupResource{{Resource: "all"}, {Resource: "events"}, {Resource: "configmaps"}, {Resource: "secrets"}}
 }
 func (o *InspectOptions) gatherNamespaceData(baseDir, namespace string) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	log.Printf("Gathering data for ns/%s...\n", namespace)

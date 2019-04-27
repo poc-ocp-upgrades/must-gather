@@ -24,9 +24,13 @@ type defaultPortForwarder struct {
 func NewDefaultPortForwarder(adminConfig *rest.Config) *defaultPortForwarder {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return &defaultPortForwarder{restConfig: adminConfig, StopChannel: make(chan struct{}, 1), ReadyChannel: make(chan struct{}, 1)}
 }
 func (f *defaultPortForwarder) ForwardPortsAndExecute(pod *corev1.Pod, ports []string, toExecute func()) error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	if len(ports) < 1 {
@@ -62,6 +66,8 @@ func (f *defaultPortForwarder) ForwardPortsAndExecute(pod *corev1.Pod, ports []s
 func setRESTConfigDefaults(config rest.Config) *rest.Config {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	if config.GroupVersion == nil {
 		config.GroupVersion = &schema.GroupVersion{Group: "", Version: "v1"}
 	}
@@ -75,6 +81,8 @@ func setRESTConfigDefaults(config rest.Config) *rest.Config {
 	return &config
 }
 func newInsecureRESTClientForHost(host string) (rest.Interface, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	insecure := true
@@ -99,6 +107,8 @@ type PortForwardURLGetter struct {
 }
 
 func (c *PortForwardURLGetter) Get(urlPath string, pod *corev1.Pod, config *rest.Config, containerPort *RemoteContainerPort) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var result string
