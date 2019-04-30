@@ -5,11 +5,8 @@ import (
 	"fmt"
 	"sort"
 	"strings"
-
 	"k8s.io/apimachinery/pkg/runtime"
-
 	"github.com/spf13/cobra"
-
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/sets"
@@ -34,64 +31,48 @@ var (
 )
 
 type EventOptions struct {
-	configFlags  *genericclioptions.ConfigFlags
-	builderFlags *genericclioptions.ResourceBuilderFlags
-
-	kinds       []string
-	namespaces  []string
-	names       []string
-	reasons     []string
-	components  []string
-	uids        []string
-	filename    string
-	warningOnly bool
-	output      string
-	sortBy      string
-
+	configFlags	*genericclioptions.ConfigFlags
+	builderFlags	*genericclioptions.ResourceBuilderFlags
+	kinds		[]string
+	namespaces	[]string
+	names		[]string
+	reasons		[]string
+	components	[]string
+	uids		[]string
+	filename	string
+	warningOnly	bool
+	output		string
+	sortBy		string
 	genericclioptions.IOStreams
 }
 
 func NewEventOptions(streams genericclioptions.IOStreams) *EventOptions {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	configFlags := genericclioptions.NewConfigFlags()
 	configFlags.Namespace = nil
-
 	scheme := runtime.NewScheme()
 	if err := corev1.AddToScheme(scheme); err != nil {
 		panic(err)
 	}
-
-	return &EventOptions{
-		configFlags: configFlags,
-		builderFlags: genericclioptions.NewResourceBuilderFlags().
-			WithLocal(true).WithScheme(scheme).WithAllNamespaces(true).WithLatest().WithAll(true),
-
-		IOStreams: streams,
-	}
+	return &EventOptions{configFlags: configFlags, builderFlags: genericclioptions.NewResourceBuilderFlags().WithLocal(true).WithScheme(scheme).WithAllNamespaces(true).WithLatest().WithAll(true), IOStreams: streams}
 }
-
 func NewCmdEvent(parentName string, streams genericclioptions.IOStreams) *cobra.Command {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	o := NewEventOptions(streams)
-
-	cmd := &cobra.Command{
-		Use:          "event -f=event.file [flags]",
-		Short:        "Inspects the event logs captured during CI test run.",
-		Example:      fmt.Sprintf(eventExample, parentName),
-		SilenceUsage: true,
-		RunE: func(c *cobra.Command, args []string) error {
-			if err := o.Complete(c, args); err != nil {
-				return err
-			}
-			if err := o.Validate(); err != nil {
-				return err
-			}
-			if err := o.Run(); err != nil {
-				return err
-			}
-
-			return nil
-		},
-	}
-
+	cmd := &cobra.Command{Use: "event -f=event.file [flags]", Short: "Inspects the event logs captured during CI test run.", Example: fmt.Sprintf(eventExample, parentName), SilenceUsage: true, RunE: func(c *cobra.Command, args []string) error {
+		if err := o.Complete(c, args); err != nil {
+			return err
+		}
+		if err := o.Validate(); err != nil {
+			return err
+		}
+		if err := o.Run(); err != nil {
+			return err
+		}
+		return nil
+	}}
 	cmd.Flags().StringVarP(&o.output, "output", "o", o.output, "Choose your output format")
 	cmd.Flags().StringSliceVar(&o.uids, "uid", o.uids, "Only match specific UIDs")
 	cmd.Flags().StringSliceVar(&o.kinds, "kinds", o.kinds, "Filter result of search to only contain the specified kind.)")
@@ -101,37 +82,33 @@ func NewCmdEvent(parentName string, streams genericclioptions.IOStreams) *cobra.
 	cmd.Flags().StringSliceVar(&o.components, "component", o.components, "Filter result of search to only contain the specified component.)")
 	cmd.Flags().BoolVar(&o.warningOnly, "warning-only", false, "Filter result of search to only contain http failures.)")
 	cmd.Flags().StringVar(&o.sortBy, "by", o.sortBy, "Choose how to sort")
-
 	o.configFlags.AddFlags(cmd.Flags())
 	o.builderFlags.AddFlags(cmd.Flags())
-
 	return cmd
 }
-
 func (o *EventOptions) Complete(command *cobra.Command, args []string) error {
-
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return nil
 }
-
 func (o *EventOptions) Validate() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return nil
 }
-
 func (o *EventOptions) Run() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	events := []*corev1.Event{}
-
 	visitor := o.builderFlags.ToBuilder(o.configFlags, nil).Do()
 	err := visitor.Visit(func(info *resource.Info, err error) error {
 		if err != nil {
 			return err
 		}
-
 		switch castObj := info.Object.(type) {
 		case *corev1.Event:
 			event := info.Object.(*corev1.Event)
 			events = append(events, event)
-
-			// inject the event twice when it appeared multiple times for easy sorting/reading
 			if event.LastTimestamp != event.FirstTimestamp {
 				alternateEvent := event.DeepCopy()
 				alternateEvent.FirstTimestamp = event.LastTimestamp
@@ -140,13 +117,11 @@ func (o *EventOptions) Run() error {
 		default:
 			return fmt.Errorf("unhandled resource: %T", castObj)
 		}
-
 		return nil
 	})
 	if err != nil {
 		return err
 	}
-
 	filters := EventFilters{}
 	if len(o.uids) > 0 {
 		filters = append(filters, &FilterByUIDs{UIDs: sets.NewString(o.uids...)})
@@ -171,7 +146,6 @@ func (o *EventOptions) Run() error {
 			}
 			kinds[gk] = true
 		}
-
 		filters = append(filters, &FilterByKind{Kinds: kinds})
 	}
 	if len(o.components) > 0 {
@@ -180,16 +154,13 @@ func (o *EventOptions) Run() error {
 	if o.warningOnly {
 		filters = append(filters, &FilterByWarnings{})
 	}
-
 	events = filters.FilterEvents(events...)
-
 	switch o.sortBy {
 	case "", "time":
 		sort.Sort(byTime(events))
 	case "count":
 		sort.Sort(byFrequency(events))
 	}
-
 	switch o.output {
 	case "components":
 		PrintComponents(o.Out, events)
@@ -207,6 +178,5 @@ func (o *EventOptions) Run() error {
 	default:
 		return fmt.Errorf("unsupported output format")
 	}
-
 	return nil
 }

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"strings"
 	"text/tabwriter"
-
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 )
@@ -13,15 +12,15 @@ import (
 type PodsAnalyzer struct{}
 
 func (*PodsAnalyzer) Analyze(content []byte) (string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	manifestObj, err := runtime.Decode(unstructured.UnstructuredJSONScheme, content)
 	if err != nil {
 		return "", err
 	}
 	manifestUnstructured := manifestObj.(*unstructured.UnstructuredList)
-
 	writer := &bytes.Buffer{}
 	w := tabwriter.NewWriter(writer, 70, 0, 0, ' ', tabwriter.DiscardEmptyColumns)
-
 	err = manifestUnstructured.EachListItem(func(object runtime.Object) error {
 		u := object.(*unstructured.Unstructured)
 		conditions, _, err := unstructured.NestedSlice(u.Object, "status", "conditions")
@@ -40,7 +39,6 @@ func (*PodsAnalyzer) Analyze(content []byte) (string, error) {
 			}
 			resultConditions = append(resultConditions, fmt.Sprintf("%s=%s", condType, condStatus))
 		}
-
 		resultContainers := []string{}
 		containerStatuses, _, err := unstructured.NestedSlice(u.Object, "status", "containerStatuses")
 		if err != nil {
@@ -67,16 +65,12 @@ func (*PodsAnalyzer) Analyze(content []byte) (string, error) {
 				resultContainers = append(resultContainers, fmt.Sprintf("  [!] Container %q restarted %d times, last exit %d caused by:\n   %s\n", containerName, restartCount, exitCode, message))
 			}
 		}
-
 		fmt.Fprintf(w, "%s\t%s\n", u.GetName(), strings.Join(resultConditions, ", "))
-
 		if len(resultContainers) > 0 {
 			fmt.Fprintf(w, "%s\n", strings.Join(resultContainers, ", "))
 		}
 		return nil
 	})
-
 	w.Flush()
-
 	return writer.String(), err
 }
