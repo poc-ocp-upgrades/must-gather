@@ -11,19 +11,18 @@ import (
 type Analyzer interface {
 	Analyze(content []byte) (string, error)
 }
-
 type AnalyzeResult struct {
-	ArtifactName string
-	Output       string
-	Error        error
+	ArtifactName	string
+	Output			string
+	Error			error
 }
 
 func GetArtifacts(baseURL string) ([]AnalyzeResult, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	out := []AnalyzeResult{}
 	for name, analyzer := range artifactsToAnalyzeList {
-		tr := &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		}
+		tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
 		client := &http.Client{Transport: tr}
 		artifactFileName := getArtifactStorageURL(baseURL, name)
 		response, err := client.Get(artifactFileName)
@@ -46,7 +45,8 @@ func GetArtifacts(baseURL string) ([]AnalyzeResult, error) {
 	}
 	return out, nil
 }
-
 func getArtifactStorageURL(baseURL, artifactName string) string {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return strings.TrimSuffix(strings.Replace(baseURL, "gcsweb-ci.svc.ci.openshift.org/gcs", "storage.googleapis.com", 1), "/") + "/" + artifactName
 }
